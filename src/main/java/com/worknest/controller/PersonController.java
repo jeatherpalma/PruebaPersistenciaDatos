@@ -49,13 +49,8 @@ public class PersonController {
         
         return null;
         
-       
-        
-        
-        
     }
-    
-    
+
     @GetMapping("/insert")
     public String insert(@RequestParam(value = "fname",required = true ,defaultValue = "null")String name,
             @RequestParam(value = "lname",required = true ,defaultValue = "null")String apellido){
