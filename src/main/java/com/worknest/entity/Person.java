@@ -19,16 +19,16 @@ public class Person implements Serializable{
     @Column(name = "id")
     private Long id;
     @Column(name = "fname")
-    private String nombre;
+    private String fname;
     @Column(name = "lname")
-    private String apellido;
+    private String lname;
 
     public Person() {
     }
 
-    public Person(String nombre, String apellido) {
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public Person(String fname, String lname) {
+        this.fname = fname;
+        this.lname = lname;
     }
     
     
@@ -50,28 +50,28 @@ public class Person implements Serializable{
      * @return the nombre
      */
     public String getNombre() {
-        return nombre;
+        return fname;
     }
 
     /**
      * @param nombre the nombre to set
      */
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.fname = nombre;
     }
 
     /**
      * @return the apellido
      */
     public String getApellido() {
-        return apellido;
+        return lname;
     }
 
     /**
      * @param apellido the apellido to set
      */
     public void setApellido(String apellido) {
-        this.apellido = apellido;
+        this.lname = apellido;
     }
     
     

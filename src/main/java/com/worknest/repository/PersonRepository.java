@@ -7,6 +7,9 @@ package com.worknest.repository;
 
 import com.worknest.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+
 
 /**
  *
