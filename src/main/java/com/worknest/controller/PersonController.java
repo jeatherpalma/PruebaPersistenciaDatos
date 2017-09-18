@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.worknest.repository.PersonRepository;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,13 +27,14 @@ public class PersonController {
     }
     @GetMapping
     public List<Person> listPerson(){
-        return personRepository.findAll();
+        return personRepository.seleccionaTodasLasPersonas();
     }
     
     /*Método que agrega un elemento a la base de datos*/
     @RequestMapping(method = RequestMethod.POST, path = "/lista")
     public String agregarElemento(@RequestParam(value = "fname") String fname,
             @RequestParam(value = "lname") String lname){
+        
         personRepository.save(new Person(fname, lname));
         return "inserted";
     }
@@ -40,14 +42,16 @@ public class PersonController {
     /*Método que agrega un elemento a la base de datos*/
     @RequestMapping(method = RequestMethod.POST, path = "/jasonBody", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String agregarElementoJSON(@RequestBody Person persona){
-        personRepository.save(persona);
-        return "agregado";
+        personRepository.agregarPersona(persona.getNombre(), persona.getApellido());
+        //personRepository.save(persona);
+        return "agregado ";
     }
     
     /*Método que modifica un elemento a la base de datos*/
-    @RequestMapping(method = RequestMethod.PUT, path = "/jasonBody", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String modificarElementoJSON(@RequestBody Person persona){
-        personRepository.save(persona);
+    @RequestMapping(method = RequestMethod.PUT, path = "/jasonBody/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String modificarElementoJSON(@PathVariable Long id,@RequestBody Person persona){
+       personRepository.actualizarPersona(persona.getNombre(), persona.getApellido(), id);
+        //personRepository.save(persona);
         return "modificado";
     }
     /*Método que elimina un elemento de la base de datos*/
@@ -62,7 +66,7 @@ public class PersonController {
     public Person listPerso(@RequestParam (value="idPersona", required = true, defaultValue = "0") Long idPersona){
        
         /*Se crea un objeto de tipo persona con el médoto findOne que busca el id de la persona*/
-        Person persona = personRepository.findOne(idPersona);
+        Person persona = personRepository.seleccionaUnaPersonaEnEspecifico(idPersona);
         if (persona!=null) {
            return persona;
         }else{
@@ -82,9 +86,13 @@ public class PersonController {
     @RequestMapping("/borrado")
     public String deletePerson(@RequestParam (value="idPersona", required = true, defaultValue = "0") Long idPersona){
       
-      
-        personRepository.delete(idPersona);        
+        try {
+            personRepository.borrarUnaPersonaEnEspecifico(idPersona);
+        } catch (Exception e) {
+        }
         return "Borrado";
+                        
+        
     }
     
     /*Removiendo un registro de la base de datos con nombre y apellido*/
