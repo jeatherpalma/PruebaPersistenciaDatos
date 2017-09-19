@@ -7,10 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "person")
+@Table(name = "personOliver")
+@NamedStoredProcedureQuery(
+		name = "agregar", 
+		procedureName = "insertPerson", 
+		parameters = {
+                      @StoredProcedureParameter(mode = ParameterMode.IN, name="fname", type=String.class),
+                      @StoredProcedureParameter(mode = ParameterMode.IN, name="lname", type=String.class)
+		}
+)
 public class Person implements Serializable{
 
    

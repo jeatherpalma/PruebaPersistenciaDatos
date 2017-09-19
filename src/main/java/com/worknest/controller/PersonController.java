@@ -27,6 +27,7 @@ public class PersonController {
     }
     @GetMapping
     public List<Person> listPerson(){
+        
         return personRepository.seleccionaTodasLasPersonas();
     }
     
@@ -42,8 +43,9 @@ public class PersonController {
     /*Método que agrega un elemento a la base de datos*/
     @RequestMapping(method = RequestMethod.POST, path = "/jasonBody", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String agregarElementoJSON(@RequestBody Person persona){
-        personRepository.agregarPersona(persona.getNombre(), persona.getApellido());
+        //personRepository.agregarPersona(persona.getNombre(), persona.getApellido());
         //personRepository.save(persona);
+        personRepository.insertPerson(persona.getNombre(), persona.getApellido());
         return "agregado ";
     }
     
